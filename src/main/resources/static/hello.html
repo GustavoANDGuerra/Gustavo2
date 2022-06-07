@@ -3,7 +3,7 @@
         <h2>HTML Exemplo - Busca</h2>
        <form action= "/helloBuscar">
                <label>Nome:</label><br>
-               <input type="text" id="fnameID" name="fname" value="Escreva aqui o nome para busca..."><br><br>
+               <input type="text" id="fnameId" name="fname" value="Escreva aqui o nome para busca..."><br><br>
                <input type="submit" value="Submit"><br>
 
           <label>Idade:</label><br>
@@ -15,7 +15,18 @@
            <input type="submit" value="Submit">
 
        </form>
-       <p>Frontend = Primeira busca - Treinamento Vixteam2022
+       <p>Frontend = Primeira busca - Treinamento Vixteam2022<p>
 
+<script type="text/javascript">
+            function buscarClient(){
+                   var nome = document.getElementById("fnameId").value
+                   const xhttp= new XMLHttpRequest();
+                   xhttp.onload = function(){
+                    document.getElementById("resposta_span_id").textContent = this.responseText;
+        }
+                    xhttp.open("GET", "/helloBuscar?fname=" +nome);
+                    xhttp.send();
+    }
+        </script>
        </body>
-</html>
+        </html>
