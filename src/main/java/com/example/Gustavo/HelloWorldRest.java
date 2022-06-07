@@ -1,6 +1,10 @@
 package com.example.Gustavo;
 
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import netscape.javascript.JSObject;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,31 +14,21 @@ import java.util.List;
 
 @RestController
 public class  HelloWorldRest {
+
+    @Autowired
+    private ClienteServiceimpl clienteService;
         @GetMapping("/helloBuscar")
     public String buscar(@RequestParam(name = "fname") String nome)
         {
+            List<Cliente> clienteEncontrado = clienteService.getAllClienteBynome(nome);
+            JSONObject clienteJson = null;
+            if(!clienteEncontrado.isEmpty()){
+                clienteJson = new JSONObject(clienteEncontrado.get(0));
+                }
 
 
 
-            //################################################
-            //Mock do Dados do banco
 
-            List<Cliente> clientes = new ArrayList<>(); //Busquei os dadods do banco
-            clientes.add(new Cliente( "Jose"));
-            clientes.add(new Cliente( "Rodolfo"));
-            clientes.add(new Cliente( "Luiz"));
-
-            //################################################
-
-            //for
-            //While
-            //Lambda
-            //Foreach
-
-
-
-           Cliente clienteEncontrado = clientes.stream().filter(cliente -> cliente.getNome().equalsIgnoreCase(nome)).findFirst().orElse(null);
-           return clienteEncontrado != null ? "Cliente encontrado" : "Cliente não encontrado";
-
+            return !clienteEncontrado.isEmpty() ? clienteJson.toString() : "null";
         }
 }
